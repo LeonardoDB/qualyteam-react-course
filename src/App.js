@@ -1,38 +1,23 @@
-import React, { Fragment } from "react";
-import "./App.scss";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
 import { Navbar } from "./components/navbar";
-import { Login } from "./pages/login";
-import { Register } from "./pages/register";
-import { List } from "./pages/list";
-import { Recipe } from "./components/Recipe";
+const Main = lazy(() => import('./Main'));
+const Register = lazy(() => import('./pages/register'));
+const Access = lazy(() => import('./pages/access'));
+const Login = lazy(() => import('./pages/login'));
 
-const recipe = {
-  id: 6,
-  title: "Batata belga",
-  description: "Uma boa batata",
-  imageUrl:
-    "https://static.baratocoletivo.com.br/2017/0622/10012991/g_allfry-c4bbebed11.jpg",
-  ingredients: "Batata, óleo, sal.",
-  preparo: "Coloque tudo na fritadeira e uhaaa!"
-};
-
-function App() {
-  return (
-    <div className="app">
-      {true ? (
-        <Fragment>
-          <Navbar />
-          <main className="content--container">
-            <List />
-            {/* <Recipe {...recipe} /> */}
-            {/* <Register /> */}
-          </main>
-        </Fragment>
-      ) 
-      :(<Login /> )
-      }
-    </div>
-  );
-}
+const App = () => (
+  <Router>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Navbar />
+      <Switch>
+        <Route exact path="/" component={Main} />
+        <Route path="/register" component={Register} />
+        <Route path="/access/:id" component={Access} />
+        <Route path="/login" component={Login} />
+      </Switch>
+    </Suspense>
+  </Router>
+);
 
 export default App;

@@ -18,10 +18,9 @@ const Login = () => (
             <input id="password" name="password" />
         </div>
       </div>
-      
         <Button> Entrar </Button>
     </form>
   </div>
 );
 
-export { Login };
+export default Login;
